@@ -1,11 +1,14 @@
-const CACHE_NAME = "productivity-pwa-v1";
+const CACHE_NAME = "productivity-pwa-v2";
 const APP_ASSETS = [
   "./",
   "./index.html",
   "./style.css",
   "./script.js",
   "./manifest.json",
-  "./icon.png"
+  "./icon.png",
+  "./icons/icon-180.png",
+  "./icons/icon-192.png",
+  "./icons/icon-512.png"
 ];
 
 self.addEventListener("install", (event) => {
