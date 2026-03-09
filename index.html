@@ -3,34 +3,59 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0b57d0">
+  <meta name="theme-color" content="#0f172a">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="Tasks">
-  <title>My Productivity App</title>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Productivity Manager">
+  <title>Productivity Manager</title>
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.png">
   <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="app">
-    <div class="big-plus" aria-hidden="true">+</div>
-    <h1>My Tasks</h1>
+  <main class="app-shell">
+    <header class="app-header">
+      <div>
+        <h1>Productivity Manager</h1>
+        <p class="subtitle">Plan clearly. Execute consistently.</p>
+      </div>
+      <button id="settingsBtn" class="settings-btn" type="button" aria-haspopup="dialog" aria-controls="settingsModal" aria-label="Open settings">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58a.5.5 0 0 0 .12-.64l-1.92-3.32a.5.5 0 0 0-.6-.22l-2.39.96a7.13 7.13 0 0 0-1.63-.94l-.36-2.54a.5.5 0 0 0-.5-.42h-3.84a.5.5 0 0 0-.5.42l-.36 2.54c-.58.22-1.13.53-1.63.94l-2.39-.96a.5.5 0 0 0-.6.22L2.71 8.84a.5.5 0 0 0 .12.64l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.5.5 0 0 0-.12.64l1.92 3.32a.5.5 0 0 0 .6.22l2.39-.96c.5.41 1.05.72 1.63.94l.36 2.54a.5.5 0 0 0 .5.42h3.84a.5.5 0 0 0 .5-.42l.36-2.54c.58-.22 1.13-.53 1.63-.94l2.39.96a.5.5 0 0 0 .6-.22l1.92-3.32a.5.5 0 0 0-.12-.64l-2.03-1.58zM12 15.5A3.5 3.5 0 1 1 12 8.5a3.5 3.5 0 0 1 0 7z"/>
+        </svg>
+      </button>
+    </header>
 
-    <form class="task-input" id="taskForm">
-      <input type="text" id="taskInput" placeholder="Enter task" autocomplete="off" required>
-      <input type="date" id="dueDateInput" required>
-      <select id="importanceInput" required>
-        <option value="high">High</option>
-        <option value="mid" selected>Mid</option>
-        <option value="low">Low</option>
-      </select>
-      <button id="addTaskBtn" type="submit">Add</button>
-    </form>
+    <section class="task-card">
+      <form class="task-input" id="taskForm">
+        <input type="text" id="taskInput" placeholder="Add a task" autocomplete="off" required>
+        <input type="date" id="dueDateInput" required>
+        <select id="importanceInput" required>
+          <option value="high">High</option>
+          <option value="mid" selected>Mid</option>
+          <option value="low">Low</option>
+        </select>
+        <button id="addTaskBtn" class="add-btn" type="submit">Add</button>
+      </form>
 
-    <ul id="taskList" aria-live="polite"></ul>
+      <ul id="taskList" class="task-list" aria-live="polite"></ul>
+    </section>
   </main>
+
+  <div id="settingsModal" class="modal-backdrop" aria-hidden="true">
+    <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="completedTitle">
+      <div class="modal-header">
+        <h2 id="completedTitle">Completed Tasks</h2>
+        <button id="closeSettingsBtn" class="close-btn" type="button" aria-label="Close settings">Close</button>
+      </div>
+      <p id="completedEmptyState" class="empty-modal">No completed tasks yet.</p>
+      <ul id="completedTaskList" class="completed-list"></ul>
+    </section>
+  </div>
 
   <script src="script.js"></script>
   <script>

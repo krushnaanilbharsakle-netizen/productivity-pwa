@@ -52,12 +52,82 @@ function saveTasks() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
 }
 
+function renderCompletedTasks() {
+  const completedTaskList = document.getElementById("completedTaskList");
+  const completedEmptyState = document.getElementById("completedEmptyState");
+
+  if (!completedTaskList || !completedEmptyState) return;
+
+  const completed = tasks.filter((task) => task.done);
+  completedTaskList.innerHTML = "";
+
+  if (completed.length === 0) {
+    completedEmptyState.hidden = false;
+    return;
+  }
+
+  completedEmptyState.hidden = true;
+
+  completed.forEach((task) => {
+    const item = document.createElement("li");
+    item.className = "completed-item";
+
+    const title = document.createElement("div");
+    title.className = "completed-title";
+    title.textContent = task.text;
+
+    const meta = document.createElement("div");
+    meta.className = "completed-meta";
+
+    const due = document.createElement("span");
+    due.textContent = `Due: ${formatDueDate(task.dueDate)}`;
+
+    const level = document.createElement("span");
+    level.className = `importance-badge importance-${task.importance}`;
+    level.textContent = task.importance.toUpperCase();
+
+    meta.appendChild(due);
+    meta.appendChild(level);
+
+    item.appendChild(title);
+    item.appendChild(meta);
+    completedTaskList.appendChild(item);
+  });
+}
+
 function displayTasks() {
   const list = document.getElementById("taskList");
   list.innerHTML = "";
 
+  if (tasks.length === 0) {
+    const empty = document.createElement("li");
+    empty.className = "empty-row";
+    empty.textContent = "No tasks yet. Add your first task.";
+    list.appendChild(empty);
+    renderCompletedTasks();
+    return;
+  }
+
   tasks.forEach((task, index) => {
     const li = document.createElement("li");
+    li.className = "task-item";
+
+    const completeBtn = document.createElement("button");
+    completeBtn.className = "complete-btn";
+    completeBtn.type = "button";
+    completeBtn.innerHTML = "<span aria-hidden=\"true\">&#10003;</span><span class=\"sr-only\">Completed</span>";
+    completeBtn.setAttribute("aria-label", task.done ? "Task completed" : "Mark task as completed");
+
+    if (task.done) {
+      completeBtn.classList.add("is-done");
+      completeBtn.disabled = true;
+    }
+
+    completeBtn.addEventListener("click", () => {
+      tasks[index].done = true;
+      saveTasks();
+      displayTasks();
+    });
 
     const content = document.createElement("div");
     content.className = "task-content";
@@ -68,12 +138,6 @@ function displayTasks() {
     if (task.done) {
       title.classList.add("done");
     }
-
-    title.addEventListener("click", () => {
-      tasks[index].done = !tasks[index].done;
-      saveTasks();
-      displayTasks();
-    });
 
     const meta = document.createElement("div");
     meta.className = "task-meta";
@@ -91,20 +155,12 @@ function displayTasks() {
     content.appendChild(title);
     content.appendChild(meta);
 
-    const deleteBtn = document.createElement("button");
-    deleteBtn.className = "delete-btn";
-    deleteBtn.type = "button";
-    deleteBtn.textContent = "Delete";
-    deleteBtn.addEventListener("click", () => {
-      tasks.splice(index, 1);
-      saveTasks();
-      displayTasks();
-    });
-
+    li.appendChild(completeBtn);
     li.appendChild(content);
-    li.appendChild(deleteBtn);
     list.appendChild(li);
   });
+
+  renderCompletedTasks();
 }
 
 function addTask() {
@@ -128,10 +184,44 @@ function addTask() {
   displayTasks();
 }
 
+function openSettingsModal() {
+  const modal = document.getElementById("settingsModal");
+  if (!modal) return;
+  renderCompletedTasks();
+  modal.classList.add("is-open");
+  modal.setAttribute("aria-hidden", "false");
+}
+
+function closeSettingsModal() {
+  const modal = document.getElementById("settingsModal");
+  if (!modal) return;
+  modal.classList.remove("is-open");
+  modal.setAttribute("aria-hidden", "true");
+}
+
 const taskForm = document.getElementById("taskForm");
+const settingsBtn = document.getElementById("settingsBtn");
+const closeSettingsBtn = document.getElementById("closeSettingsBtn");
+const settingsModal = document.getElementById("settingsModal");
+
 taskForm.addEventListener("submit", (event) => {
   event.preventDefault();
   addTask();
+});
+
+settingsBtn.addEventListener("click", openSettingsModal);
+closeSettingsBtn.addEventListener("click", closeSettingsModal);
+
+settingsModal.addEventListener("click", (event) => {
+  if (event.target === settingsModal) {
+    closeSettingsModal();
+  }
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    closeSettingsModal();
+  }
 });
 
 displayTasks();
