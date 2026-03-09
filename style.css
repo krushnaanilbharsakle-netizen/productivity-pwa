@@ -18,7 +18,7 @@ body {
 }
 
 .app {
-  max-width: 560px;
+  max-width: 700px;
   margin: 0 auto;
   padding: 20px;
   text-align: center;
@@ -37,18 +37,19 @@ h1 {
 }
 
 .task-input {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1.7fr 1fr 1fr auto;
   gap: 10px;
-  justify-content: center;
   margin-bottom: 20px;
 }
 
-input {
+input,
+select {
   width: 100%;
-  max-width: 300px;
   padding: 10px;
   border: 1px solid #d3d3d3;
   border-radius: 6px;
+  font: inherit;
 }
 
 button {
@@ -58,6 +59,7 @@ button {
   background: var(--brand);
   color: #fff;
   cursor: pointer;
+  font: inherit;
 }
 
 ul {
@@ -71,7 +73,6 @@ li {
   margin: 10px auto;
   padding: 10px;
   width: 100%;
-  max-width: 360px;
   border-radius: 8px;
   display: flex;
   justify-content: space-between;
@@ -79,12 +80,57 @@ li {
   gap: 10px;
 }
 
-.task-text {
+.task-content {
   flex: 1;
   text-align: left;
+}
+
+.task-text {
+  font-weight: 600;
   cursor: pointer;
+}
+
+.task-meta {
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: #666;
+}
+
+.done {
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+.importance-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.importance-high {
+  background: #d64545;
+}
+
+.importance-mid {
+  background: #db8a00;
+}
+
+.importance-low {
+  background: #2b8a3e;
 }
 
 .delete-btn {
   background: #e33;
+}
+
+@media (max-width: 760px) {
+  .task-input {
+    grid-template-columns: 1fr;
+  }
 }

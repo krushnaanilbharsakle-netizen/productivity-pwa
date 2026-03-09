@@ -12,10 +12,16 @@
     <div class="big-plus" aria-hidden="true">+</div>
     <h1>My Tasks</h1>
 
-    <div class="task-input">
-      <input type="text" id="taskInput" placeholder="Enter task" autocomplete="off">
-      <button id="addTaskBtn" type="button">Add</button>
-    </div>
+    <form class="task-input" id="taskForm">
+      <input type="text" id="taskInput" placeholder="Enter task" autocomplete="off" required>
+      <input type="date" id="dueDateInput" required>
+      <select id="importanceInput" required>
+        <option value="high">High</option>
+        <option value="mid" selected>Mid</option>
+        <option value="low">Low</option>
+      </select>
+      <button id="addTaskBtn" type="submit">Add</button>
+    </form>
 
     <ul id="taskList" aria-live="polite"></ul>
   </main>
