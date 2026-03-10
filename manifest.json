@@ -1,5 +1,5 @@
 {
-  "name": "My Productivity App",
+  "name": "Productivity OS",
   "short_name": "Tasks",
   "id": "./",
   "start_url": "./",
@@ -9,22 +9,16 @@
   "background_color": "#f4f4f4",
   "theme_color": "#0b57d0",
   "description": "Track tasks with due dates and importance levels.",
-  "icons": [
-    {
-      "src": "icons/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    },
-    {
-      "src": "icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
-    }
-  ]
+"icons": [
+  {
+    "src": "app_logo.png",
+    "sizes": "192x192",
+    "type": "image/png"
+  },
+  {
+    "src": "app_logo.png",
+    "sizes": "512x512",
+    "type": "image/png"
+  }
+]
 }
